@@ -1,0 +1,19 @@
+tipo entero vector [8];
+
+entero z = 1;
+vacio decrementa (entero x) { /* declaración del subprograma */
+	entero y;
+	y = x+1;
+	escribe("y (4) = ");
+	escribeEnt(y);
+}
+
+vacio principal () { /* Función principal */
+	entero l;
+	
+	escribe("*** INVOCACION DE SUBPROGRAMAS***");
+	l = z;
+	z = 3;
+	decrementa(z); /* sentencia de invocación del subprograma */
+	escribe("FIN");
+}

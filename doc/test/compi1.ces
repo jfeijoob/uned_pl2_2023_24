@@ -1,0 +1,15 @@
+#constante TAM 7;
+tipo entero vector [TAM];
+entero c = 9;
+vacio principal () {
+
+	entero b = 8;
+	entero indice = 0;
+
+	b++;
+	c++;
+	escribeEnt (b);
+	escribeEnt (c);
+	escribeEnt (TAM);
+
+}

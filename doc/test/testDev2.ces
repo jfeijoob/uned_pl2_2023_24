@@ -1,0 +1,27 @@
+#constante TAM 7;
+tipo entero vector [TAM];
+entero c = 9;
+vacio principal () {
+	vector a;
+	entero b = 8;
+	entero indice = 0;
+	
+	a[1] = 5;
+	b++;
+	c++;
+	escribeEnt (b);
+	escribeEnt (c);
+	escribeEnt (a[0]+1);
+	escribeEnt (a[1]+1);
+	escribeEnt (a[2]+1);
+	escribe( "Entro en Loop" );
+	mientras(indice<7){
+		si( indice < 7 && !indice < 4 ){
+			escribe( "Entre 6 y 4" );
+		}sino{
+			escribe( "Otro loop" );
+		}
+		escribeEnt (indice);
+		indice++;
+	}
+}

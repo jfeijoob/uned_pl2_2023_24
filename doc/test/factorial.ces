@@ -1,0 +1,34 @@
+
+entero factorialInterno( entero desde, entero hasta ){
+	si( desde == hasta )
+		devuelve hasta;
+		
+	devuelve desde * factorialInterno( desde+1, hasta );
+}
+
+
+
+entero factorial( entero num ){
+	entero resultado = 0;
+	si( num < 2 ){
+		alternativas( num ){
+			caso 0:{ devuelve 0; } corte;
+			caso 1:{ devuelve 1; } corte;
+		}
+	}
+	resultado = factorialInterno( 2, num );
+	devuelve resultado;
+}
+
+
+vacio principal(){
+	entero resultado;
+	escribe("Factorial de 4");
+	resultado = factorial(4);
+	escribeEnt( resultado );
+
+	escribe("Factorial de 1");
+	resultado = factorial(1);
+	escribeEnt( resultado );
+
+}

@@ -1,0 +1,14 @@
+vacio printfibo(entero i, entero endi, entero val1, entero val2)
+{
+    escribeEnt(val2);
+    si (i < endi)
+        printfibo(i + 1, endi, val2, val1 + val2);
+
+    devuelve;
+}
+
+vacio principal()
+{
+    printfibo(1, 10, 0, 1);
+    devuelve;
+}

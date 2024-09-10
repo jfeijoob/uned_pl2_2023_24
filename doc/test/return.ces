@@ -1,0 +1,13 @@
+entero f(){
+	escribe("Test");
+	
+	si(1){
+		devuelve;
+	}
+	
+	devuelve 2;
+}
+
+vacio principal(){
+	escribe("Test");
+}

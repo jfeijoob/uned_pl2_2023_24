@@ -1,0 +1,17 @@
+vacio principal (){
+
+tipo entero vector [3];
+vector v;
+entero a, b, c;
+v [0] = 1; v [1] = 2; v[2] = 3;
+a=4;
+b=12;
+c=a+b;
+escribeEnt(c);
+escribeEnt(v[0]);
+escribeEnt(v[1]);
+c= v[0]+v[1];
+escribeEnt(c);
+
+devuelve;
+}

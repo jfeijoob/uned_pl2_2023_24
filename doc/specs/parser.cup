@@ -1,0 +1,309 @@
+package compiler.syntax;
+
+// Declaracion de importaciones 
+//(No modificar las proporcionadas. Se pueden agregar mas)
+
+import java_cup.runtime.Symbol;
+import java.util.*;
+
+import es.uned.lsi.compiler.lexical.*;
+import es.uned.lsi.compiler.code.*;
+import es.uned.lsi.compiler.intermediate.*;
+import es.uned.lsi.compiler.semantic.*;
+import es.uned.lsi.compiler.semantic.symbol.*;
+import es.uned.lsi.compiler.semantic.type.*;
+import es.uned.lsi.compiler.syntax.*;
+
+import compiler.CompilerContext;
+import compiler.lexical.*;
+import compiler.syntax.nonTerminal.*;
+
+import compiler.semantic.symbol.*;
+import compiler.semantic.type.*;
+import compiler.intermediate.*;
+import compiler.code.*;
+import compiler.pec.AccionesSemanticas;
+
+// Declaracion del codigo de usuario
+
+action code {:
+	
+	SyntaxErrorManager   syntaxErrorManager   = CompilerContext.getSyntaxErrorManager();
+	SemanticErrorManager semanticErrorManager = CompilerContext.getSemanticErrorManager ();
+	ScopeManagerIF       scopeManager         = CompilerContext.getScopeManager ();
+	FinalCodeFactoryIF   finalCodeFactory     = CompilerContext.getFinalCodeFactory ();
+	AccionesSemanticas   as					  = new AccionesSemanticas();
+
+:}	
+
+parser code {:
+	SyntaxErrorManager syntaxErrorManager = CompilerContext.getSyntaxErrorManager();
+	
+	public void syntax_error(Symbol symbol)
+	{ 
+	    Token token = (Token) symbol.value;
+	    syntaxErrorManager.syntaxError ("Error sintactico", token);	    
+	}
+		
+	public void unrecovered_syntax_error(java_cup.runtime.Symbol symbol)
+	{	
+	    Token token = (Token) symbol.value;
+	    syntaxErrorManager.syntaxFatalError ("Error fatal", token);
+	}
+:}
+
+// Declaracion de terminales
+
+
+terminal Token PLUS;
+terminal Token AUTO_INCREMENTO;
+terminal Token MULT;
+terminal Token AND_LOGICA;
+terminal Token OPEN_BRACKET;
+terminal Token CLOSE_BRACKET;
+terminal Token OPEN_PARENTHESIS;
+terminal Token CLOSE_PARENTHESIS;
+terminal Token OPEN_KEY;
+terminal Token CLOSE_KEY;
+terminal Token SEMI_COLON;
+terminal Token COLON;
+terminal Token TWO_POINTS;
+terminal Token NEGACION;
+terminal Token EQUAL;
+terminal Token ASSIGN_SUMA;
+terminal Token ASSIGN;
+terminal Token LOWER_THAN;
+terminal Token CASO;
+terminal Token CONSTANTE;
+terminal Token CORTE;
+terminal Token ENTERO;
+terminal Token ESCRIBE;
+terminal Token ESCRIBE_ENT;
+terminal Token ALTENATIVAS;
+terminal Token MIENTRAS;
+terminal Token PORDEFECTO;
+terminal Token principal;
+terminal Token DEVUELVE;
+terminal Token SI;
+terminal Token SINO;
+terminal Token TIPO;
+terminal Token VACIO;
+terminal Token IDENTIFICADOR;
+terminal Token NUMERO;
+terminal Token STRING;
+
+
+// Declaracion de no terminales
+
+non terminal  			program;
+non terminal Axiom		axiom;
+non terminal axiom1,listadoIDs1,id1,funcion1;
+non terminal  			funcionPrincipal;
+non terminal			epsilon;
+non terminal			seccionFunciones;
+non terminal			funcion;
+non terminal			seccionParametros;
+non terminal		 	declaracionParametros;
+non terminal			parametro;
+non terminal			seccionConstantes;
+non terminal			declaracionConstante;
+non terminal			seccionTipos;
+non terminal			declaracionTipo;
+non terminal			tamTipo;
+non terminal			seccionVariables;
+non terminal 			declaracionVariable;
+non terminal			listadoIDs;
+non terminal			id;
+non terminal			expresion;
+non terminal 			accesoVector;
+non terminal			llamadaFuncion;
+non terminal			bloque;
+non terminal			listadoSentencias;
+non terminal			sentencia;
+non terminal			sentenciaIncremento;
+non terminal			sentenciaAsignacion;
+non terminal			ref;
+non terminal			sentenciaAsignacionSuma;
+non terminal			sentenciaSi;
+non terminal			sentenciaAlternativas;
+non terminal			casosAlternativa;
+non terminal			casoAlt; 
+non terminal			porDefecto;
+non terminal			sentenciaMientras;
+non terminal			sentenciaLlamadaFuncion;
+non terminal			parametros;
+non terminal			sentenciaSalida;
+non terminal			opcionesEscribe;
+non terminal			opcionesEscribeEnt;
+non terminal			sentenciaDevuelve;
+
+// Declaracion de relaciones de precedencia
+precedence left     AND_LOGICA;
+precedence left		EQUAL;
+precedence left		LOWER_THAN;
+precedence left		PLUS;
+precedence left		MULT;
+precedence left		AUTO_INCREMENTO, NEGACION;
+precedence right	OPEN_BRACKET, CLOSE_BRACKET;
+precedence left 	OPEN_KEY, CLOSE_KEY;
+precedence nonassoc SINO;
+precedence nonassoc SI;
+            
+
+// Declaracion de reglas de produccion
+
+
+start with program;
+
+program ::= 
+  {: 
+        syntaxErrorManager.syntaxInfo ("Starting parsing..."); 
+   :}
+  axiom:ax
+  {:   		
+  		// No modificar esta estructura, aunque se pueden añadir más acciones semánticas
+  		
+  		//List intermediateCode = ax.getIntermediateCode ();
+  		//finalCodeFactory.create (intermediateCode);
+
+  		// En caso de no comentarse las dos sentencias anteriores se puede generar una excepcion
+  		// en las llamadas a cupTest si el compilador no está completo. Esto es debido a que 
+  		// aún no se tendrá implementada la generación de código intermedio ni final.
+  		// Para la entrega final deberán descomentarse y usarse.
+  		
+  		syntaxErrorManager.syntaxInfo ("Parsing process ended.");
+  		
+   :};
+
+
+epsilon ::= ;
+
+
+axiom ::=  seccionConstantes seccionTipos  axiom1 ;
+
+axiom1 ::= seccionVariables seccionFunciones  | seccionFunciones;
+
+seccionConstantes ::= declaracionConstante seccionConstantes
+                      | epsilon;
+                      
+                      
+declaracionConstante ::= CONSTANTE IDENTIFICADOR NUMERO SEMI_COLON;
+
+seccionTipos ::= declaracionTipo seccionTipos
+                      | epsilon;
+                      
+declaracionTipo ::= TIPO ENTERO IDENTIFICADOR OPEN_BRACKET tamTipo CLOSE_BRACKET SEMI_COLON;
+
+tamTipo ::= NUMERO | IDENTIFICADOR;
+
+seccionVariables ::= seccionVariables declaracionVariable | declaracionVariable;
+
+declaracionVariable ::= ENTERO listadoIDs SEMI_COLON
+                      | IDENTIFICADOR listadoIDs SEMI_COLON;
+                      
+listadoIDs ::= id listadoIDs1;
+
+listadoIDs1 ::= COLON listadoIDs
+                      | epsilon;
+
+id ::= IDENTIFICADOR id1;
+
+id1 ::= epsilon
+        | ASSIGN NUMERO;
+
+seccionFunciones ::= funcion seccionFunciones
+                      | funcionPrincipal;
+                      
+funcion ::= VACIO IDENTIFICADOR:id  OPEN_KEY seccionParametros CLOSE_KEY OPEN_PARENTHESIS seccionTipos funcion1
+			{:
+				as.accionDeclaracionFuncion( id );
+			:}
+            | ENTERO IDENTIFICADOR:id  OPEN_KEY seccionParametros CLOSE_KEY OPEN_PARENTHESIS seccionTipos funcion1
+            {:
+				as.accionDeclaracionFuncion( id );
+			:};
+                     
+         
+funcion1 ::= listadoSentencias CLOSE_PARENTHESIS
+                      | seccionVariables listadoSentencias  CLOSE_PARENTHESIS;
+
+
+
+
+
+seccionParametros ::= declaracionParametros | epsilon;
+
+declaracionParametros  ::= parametro | parametro COLON declaracionParametros;
+
+parametro ::= ENTERO IDENTIFICADOR | IDENTIFICADOR IDENTIFICADOR;
+
+funcionPrincipal ::= VACIO principal OPEN_KEY CLOSE_KEY OPEN_PARENTHESIS seccionTipos listadoSentencias CLOSE_PARENTHESIS
+	|  VACIO principal OPEN_KEY CLOSE_KEY OPEN_PARENTHESIS seccionTipos seccionVariables listadoSentencias CLOSE_PARENTHESIS;
+
+
+
+// EXPRESIONES
+
+expresion ::= NUMERO | IDENTIFICADOR
+	|  OPEN_KEY expresion CLOSE_KEY 
+ 	|  expresion PLUS expresion
+ 	|  expresion MULT expresion
+ 	|  expresion AUTO_INCREMENTO
+ 	|  NEGACION expresion
+ 	|  expresion LOWER_THAN expresion
+ 	|  expresion EQUAL expresion
+ 	|  expresion AND_LOGICA expresion
+ 	|  accesoVector
+ 	|  llamadaFuncion;
+
+accesoVector ::= IDENTIFICADOR OPEN_BRACKET expresion CLOSE_BRACKET;
+
+llamadaFuncion ::= IDENTIFICADOR OPEN_KEY parametros CLOSE_KEY
+	| IDENTIFICADOR OPEN_KEY CLOSE_KEY;
+parametros ::= expresion | expresion COLON parametros;
+
+//  SENTENCIAS
+
+bloque ::= OPEN_PARENTHESIS seccionVariables listadoSentencias CLOSE_PARENTHESIS
+ 	|  OPEN_PARENTHESIS listadoSentencias CLOSE_PARENTHESIS;
+
+listadoSentencias ::= listadoSentencias sentencia | sentencia;
+
+sentencia ::= sentenciaDevuelve
+	| sentenciaIncremento
+	| sentenciaAsignacion
+	| sentenciaAsignacionSuma
+	| sentenciaSi
+	| sentenciaAlternativas
+	| sentenciaMientras
+	| sentenciaLlamadaFuncion
+	| sentenciaSalida
+	| bloque;
+
+sentenciaDevuelve ::= DEVUELVE SEMI_COLON	
+	| DEVUELVE expresion SEMI_COLON;
+
+sentenciaIncremento ::= IDENTIFICADOR AUTO_INCREMENTO SEMI_COLON;
+
+sentenciaAsignacion ::= ref ASSIGN expresion SEMI_COLON;
+ref ::= IDENTIFICADOR | accesoVector;
+
+sentenciaAsignacionSuma ::= ref ASSIGN_SUMA expresion SEMI_COLON;
+
+sentenciaSi ::= SI OPEN_KEY expresion CLOSE_KEY sentencia SINO sentencia
+	 | SI OPEN_KEY expresion CLOSE_KEY sentencia;
+	
+sentenciaAlternativas ::= ALTENATIVAS OPEN_KEY expresion CLOSE_KEY OPEN_PARENTHESIS casosAlternativa porDefecto CLOSE_PARENTHESIS;
+casosAlternativa ::= casosAlternativa casoAlt | casoAlt;
+
+casoAlt ::= CASO NUMERO TWO_POINTS bloque CORTE SEMI_COLON;
+porDefecto ::= PORDEFECTO TWO_POINTS bloque CORTE SEMI_COLON | epsilon; 
+
+sentenciaMientras ::= MIENTRAS OPEN_KEY expresion CLOSE_KEY sentencia;
+
+sentenciaLlamadaFuncion ::= llamadaFuncion SEMI_COLON;
+
+sentenciaSalida ::=ESCRIBE OPEN_KEY opcionesEscribe CLOSE_KEY SEMI_COLON
+	| ESCRIBE_ENT OPEN_KEY opcionesEscribeEnt CLOSE_KEY SEMI_COLON;
+opcionesEscribe ::= epsilon | STRING;
+opcionesEscribeEnt ::= epsilon | expresion;

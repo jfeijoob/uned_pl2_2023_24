@@ -1,0 +1,57 @@
+
+/* 
+
+// Flujo , operadores relacionales y lógicos (si mientras)
+
+*/
+
+
+
+vacio principal () {
+
+
+entero a;
+entero b;
+entero dia;
+
+a=2;
+b=2;
+
+si (a==b) {
+
+	escribe("si bien");
+}
+sino {
+
+	escribe("si mal");
+
+}
+
+
+escribe(" mientras");
+mientras (a<5){
+	escribeEnt(a);	a=a+1;
+}
+
+escribe (" alternativas");
+
+dia = 0;
+
+mientras( dia < 8 ){
+	alternativas (dia) {
+		caso 1: {escribe ("lunes");} corte;
+		caso 2: {escribe ("martes");} corte;	
+		caso 3: {escribe ("miercoles");} corte;	
+		caso 4: {escribe ("jueves");} corte;	
+		caso 5: {escribe ("viernes");} corte;	
+		caso 6: {escribe ("sabado");} corte;	
+		caso 7: {escribe ("domingo");} corte;	
+		pordefecto: {escribe ("Que dia es este");} corte;	
+	}
+	dia++;
+}
+
+
+devuelve;
+
+}

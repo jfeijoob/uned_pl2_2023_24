@@ -1,0 +1,69 @@
+#constante VERDADERO 1;
+#constante FALSO 0;
+#constante TAM 7;
+
+tipo entero vector [TAM];
+entero suma;
+entero mayorDiez;
+
+entero funSuma (entero x, entero y) {
+	entero i = 5;
+	entero suma;
+	suma = x + y;
+	devuelve suma;
+}
+
+vacio comprobarEdad( entero edad ){
+	alternativas( edad ){
+		caso 5:{
+			edad++;		
+			/*
+			escribe("Cinco");*/
+		}
+		corte;
+		caso 15:{
+			edad++;
+			/*
+			escribe("Quince");*/
+		}
+		corte;
+		caso 25:{
+			edad++;
+			/*
+			escribe("Venticinco");*/
+		}
+		corte;
+		pordefecto:{
+			edad++;
+			/*
+			escribe("Ni idea");*/
+		}
+		corte;
+	}
+}
+
+vacio principal () {
+	entero a = 0, b;
+	entero i;
+	vector v;
+	
+	mientras(a<8){
+		a++;
+	}
+	
+	a = 8;
+	suma = funSuma (a, b);
+	v[3] = 4;
+	i += 1+v[3];
+	mayorDiez = !(suma < 10);
+	escribeEnt(suma); 
+	si (mayorDiez == VERDADERO) { 
+		escribe ("mayor"); 
+	} sino {
+		escribe ("menor");
+	}
+	
+	comprobarEdad( 3 );
+	
+	devuelve;
+}

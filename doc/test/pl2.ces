@@ -1,0 +1,36 @@
+#constante TAM 10;
+tipo entero vector1[3];
+tipo entero vector2[TAM];
+vector1 lista1;
+/*Dentro de la función se crea un nuevo ámbito
+al finalizar la función no olvidar cerrar el ámbito*/
+
+entero incrementa (entero x)
+{
+	tipo entero vector3[4];
+	vector2 lista2;
+	vector3 lista3;
+	entero a;
+	/* bloque nuevo ámbito, cerrar al cerrar las llaves*/
+	{
+		entero c;
+		/* bloque nuevo ámbito, cerrar al cerrar las llaves*/
+		{
+			c=1;
+			escribe("c");
+			escribeEnt(c);
+		}
+	}
+	devuelve 1;
+}
+
+
+/*Dentro de la función se crea un nuevo ámbito
+al finalizar la función no olvidar cerrar el ámbito*/
+
+vacio principal () 
+{
+	tipo entero vector3[4];
+	vector3 lista3;
+	devuelve;
+}

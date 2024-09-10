@@ -1,0 +1,27 @@
+#constante VERDADERO 1
+#constante FALSO 0
+#constante TAM 7
+
+tipo entero vector [TAM];
+entero suma;
+entero mayorDiez;
+
+entero funSuma (entero x, entero y) {
+	entero i;
+	entero suma;
+	suma = x + y;
+	devuelve suma;
+}
+
+vacio principal () {
+	entero a, b;
+	entero i;
+	suma = funSuma (a, b);
+	mayorDiez = !(suma < 10);
+	si (mayorDiez == VERDADERO) { 
+		escribe ("mayor"); 
+	} sino {
+		escribe ("menor");
+	}
+	devuelve;
+}

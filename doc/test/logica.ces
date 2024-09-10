@@ -1,0 +1,59 @@
+vacio principal(){
+	entero a = 1, b = 2;
+	
+	si(3){
+		escribe("el 3");
+	}
+
+	si(!2){
+		escribe("el 2");
+	}sino{
+		escribe("NO el 2");
+	}
+
+	si(0<!1){
+		escribe("si 0<!1");
+	}sino{
+		escribe("NO 0<!1");
+	}
+
+	si(!0<1){
+		escribe("si !0<1");
+	}sino{
+		escribe("NO !0<1");
+	}
+	
+	
+	si( 3 && 2 ){
+		escribe("3 y 2");
+	}
+
+	si( 1 && 2 ){
+		escribe("1 y 2");
+	}
+
+	si( a && b ){
+		escribe("primer a y b");
+	}
+	
+	a = 0;
+
+	si( !(a && b) ){
+		escribe("a y b");
+	}sino{
+		escribe("NO a y b");
+	}
+
+
+	si( 0 && 2 ){
+		escribe("0 y 2");
+	}sino{
+		escribe("NO 0 y 2");
+	}
+
+	
+	si( 4 == 4 ){
+		escribe("igual 4");
+	}
+	
+}
