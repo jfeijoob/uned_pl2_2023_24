@@ -1,0 +1,1 @@
+¡¡¡¡¡¡ ATENCION !!!!!! El proyecto compartido tiene una arquitectura especifica para la práctica de el curso indicado ( 2023-24 ) solo se usa como ejemplo, tened en cuenta que la vuestra puede diferir de la que hay, así que no uséis la que hay en github como base para vuestra práctica.
